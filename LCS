@@ -1,0 +1,73 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+// int lcs_count(string s1, string s2, int n, int m)
+// {
+//     if(n==0 || m==0)
+//         return 0;
+                                                                
+//     if(s1[n-1] == s2[m-1])                              // lcs function using recursion.
+//         return (1 + lcs_count(s1, s2, n-1, m-1));
+    
+//     else
+//     {
+//         return max(lcs_count(s1, s2, n-1, m), lcs_count(s1, s2, n, m-1));
+//     }
+// }
+
+int lcs_count_using_memoization(string s1, string s2, int n, int m, int **dp)
+{
+    if(n ==0 || m ==0)
+        return 0;
+    
+    if(dp[n][m] > -1)
+        return dp[n][m];
+    
+    else
+    {
+        if(s1[n-1] == s2[m-1])
+        {
+            dp[n][m] = 1 + lcs_count_using_memoization(s1,s2,n-1, m-1, dp);
+            return dp[n][m];
+        }
+
+        else
+        {
+            dp[n][m]= max(lcs_count_using_memoization(s1, s2, n-1, m, dp), lcs_count_using_memoization(s1, s2, n, m-1, dp));
+            return dp[n][m];
+        }
+        
+
+    }
+    
+}
+int main()
+{
+    int t;
+    cin>>t;
+
+    while(t--)
+    {
+        int len1, len2;
+        cin>>len1>>len2;
+        
+        string s1, s2;
+        cin>>s1>>s2;
+        
+        // cout<<lcs_count(s1, s2, s1.size(), s2.size())<<endl; //function call for lcs using recursion.
+        int **dp = new int*[s1.size() +1];
+        for(int i=0; i<=s1.size(); i++)
+        {
+            dp[i] = new int[s2.size() + 1];
+            for(int j=0; j<=s2.size(); j++)
+                dp[i][j] = -1;
+        }
+        
+        cout<<lcs_count_using_memoization(s1, s2, len1, len2, dp)<<endl;
+        for(int i=0; i<=s1.size(); i++)
+            delete[] dp[i];
+        
+        delete[] dp;
+    
+    }
+}
