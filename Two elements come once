@@ -1,0 +1,38 @@
+/*
+    Time complexity: O(N)
+    Space complexity: O(1)
+
+    where N is the number of elements in the array/vector
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+void printUniqueElements(vector<int> arr) {
+    int XOR = 0; // 'XOR' will contain the XOR of the two unique elements
+
+    for (int i = 0; i < arr.size(); ++i) {
+        XOR ^= arr[i];
+    }
+
+    int mask = XOR & (-XOR); // 'mask' will contain the mask for the lowest set bit of 'XOR'
+
+    // 'XOR1' and 'XOR2' will each contain a unique element after the code below is executed
+    int XOR1 = 0; 
+    int XOR2 = 0;
+
+    for (int i = 0; i < arr.size(); ++i) {
+        if ((arr[i] & mask) == 0) { // Bit at position of lowest set bit in 'XOR' is 0 in arr[i]
+            XOR1 ^= arr[i];
+        } else { // Bit at position of lowest set bit in 'XOR' is 1 in arr[i]
+            XOR2 ^= arr[i];
+        }
+    }
+
+    cout << XOR1 << " " << XOR2;
+}
+
+int main() {
+    vector<int> arr = {-31, -31, 0, 0, 3, 13, 17, 13, 17, 7};
+    printUniqueElements(arr); // 3 7
+}
