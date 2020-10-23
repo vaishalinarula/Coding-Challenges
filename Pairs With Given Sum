@@ -1,0 +1,30 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+void pairsWithGivenSum(int* a, int n, int sum){
+
+	unordered_map<int, int> m;
+	for(int i = 0; i < n; i++){
+		int rem_sum = sum-a[i];
+		if(m.find(rem_sum) != m.end()){
+			int count = m[rem_sum];
+			for(int j = 0; j< count; j++){
+				cout<<a[i]<<" "<<rem_sum<<endl;
+			}
+		}
+		m[a[i]]++;
+	}
+}
+int main(){
+
+	int n;
+	cin>>n;
+	int * a= new int[n+1];
+	for(int  i = 0; i < n; i++){
+		cin>>a[i];
+	}
+	int sum;
+	cout<<"Enter Sum:";
+	cin>>sum;
+	pairsWithGivenSum(a, n, sum);
+}
